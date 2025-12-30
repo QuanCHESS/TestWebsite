@@ -12,6 +12,7 @@ class ChessProfilePage {
         this.setupScrollReveal();
         this.setupScrollProgress();
         this.setupForm();
+        this.setupAnimationDelays();
     }
     
     setupTabs() {
@@ -49,20 +50,37 @@ class ChessProfilePage {
         });
     }
     
+    setupAnimationDelays() {
+        // Set staggered delays for grid items
+        const websites = document.querySelectorAll('.website-card');
+        websites.forEach((card, index) => {
+            card.style.setProperty('--index', index);
+        });
+        
+        const highlights = document.querySelectorAll('.highlight-item');
+        highlights.forEach((item, index) => {
+            item.style.setProperty('--index', index);
+        });
+        
+        const videos = document.querySelectorAll('.video-card');
+        videos.forEach((card, index) => {
+            card.style.setProperty('--index', index);
+        });
+    }
+    
     setupScrollReveal() {
-        const revealElements = document.querySelectorAll('.reveal');
+        const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
         
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                    
-                    // Add delay based on data-delay attribute
+                    // Add visible class with delay for staggered animations
                     const delay = entry.target.dataset.delay || 0;
                     setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.classList.add('visible');
                     }, delay * 100);
+                    
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
@@ -74,19 +92,37 @@ class ChessProfilePage {
             observer.observe(element);
         });
         
-        // Initial trigger
+        // Initial trigger for active tab
         this.triggerRevealAnimations();
     }
     
     triggerRevealAnimations() {
         const activeTab = document.querySelector('.tab-content.active');
         if (activeTab) {
-            const elements = activeTab.querySelectorAll('.reveal');
+            const elements = activeTab.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
+            
             elements.forEach((el, index) => {
+                // Remove any existing visible class
+                el.classList.remove('visible');
+                
+                // Reset styles
+                if (el.classList.contains('reveal-left')) {
+                    el.style.transform = 'translateX(-50px)';
+                } else if (el.classList.contains('reveal-right')) {
+                    el.style.transform = 'translateX(50px)';
+                } else if (el.classList.contains('reveal-up')) {
+                    el.style.transform = 'translateY(30px)';
+                }
+                el.style.opacity = '0';
+                
+                // Trigger reflow
+                void el.offsetWidth;
+                
+                // Add visible class with staggered delay
+                const delay = el.dataset.delay || index * 0.1;
                 setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 100);
+                    el.classList.add('visible');
+                }, delay * 300);
             });
         }
     }
@@ -109,9 +145,17 @@ class ChessProfilePage {
                 const submitBtn = form.querySelector('.submit-btn');
                 const originalText = submitBtn.innerHTML;
                 
-                // Show loading state
+                // Show loading state with reveal animation
+                submitBtn.classList.remove('visible');
+                submitBtn.style.transform = 'translateY(20px)';
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
                 submitBtn.disabled = true;
+                
+                // Trigger reflow
+                void submitBtn.offsetWidth;
+                
+                // Add visible class for animation
+                submitBtn.classList.add('visible');
                 
                 // Simulate form submission
                 setTimeout(() => {
@@ -126,7 +170,7 @@ class ChessProfilePage {
                         submitBtn.style.background = '';
                         submitBtn.disabled = false;
                         
-                        // Show success message
+                        // Show success message with reveal animation
                         this.showNotification('Message sent successfully!');
                     }, 2000);
                 }, 1500);
@@ -143,7 +187,7 @@ class ChessProfilePage {
         
         // Create new notification
         const notification = document.createElement('div');
-        notification.className = 'notification';
+        notification.className = 'notification reveal-up';
         notification.innerHTML = `
             <div class="notification-content">
                 <i class="fas fa-check-circle"></i>
@@ -162,50 +206,28 @@ class ChessProfilePage {
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 10000;
-            animation: slideIn 0.3s ease;
             font-family: 'Montserrat', sans-serif;
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         `;
         
         document.body.appendChild(notification);
         
-        // Add animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-        `;
-        document.head.appendChild(style);
+        // Trigger reveal animation
+        setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateY(0)';
+        }, 10);
         
         // Remove notification after 3 seconds
         setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease forwards';
-            
-            const slideOutStyle = document.createElement('style');
-            slideOutStyle.textContent = `
-                @keyframes slideOut {
-                    from {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                    to {
-                        transform: translateX(100%);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(slideOutStyle);
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(-30px)';
             
             setTimeout(() => {
                 notification.remove();
-            }, 300);
+            }, 500);
         }, 3000);
     }
 }
@@ -214,40 +236,13 @@ class ChessProfilePage {
 document.addEventListener('DOMContentLoaded', () => {
     const chessProfile = new ChessProfilePage();
     
-    // Add hover effects to video cards
-    const videoCards = document.querySelectorAll('.video-card');
-    videoCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            const playBtn = this.querySelector('.play-btn');
-            if (playBtn) {
-                playBtn.style.transform = 'translate(-50%, -50%) scale(1.1)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            const playBtn = this.querySelector('.play-btn');
-            if (playBtn) {
-                playBtn.style.transform = 'translate(-50%, -50%) scale(1)';
-            }
-        });
-    });
-    
-    // Add click event to video cards (simulate play)
-    videoCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            if (!e.target.closest('.play-btn')) {
-                const title = this.querySelector('h3').textContent;
-                chessProfile.showNotification(`Playing: ${title}`);
-            }
-        });
-    });
-    
     // Add chess piece floating animation in background
     const chessBoard = document.querySelector('.chess-board');
     const chessPieces = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn'];
     
     for (let i = 0; i < 8; i++) {
         const piece = document.createElement('div');
+        piece.className = 'floating-piece reveal-up';
         piece.style.cssText = `
             position: fixed;
             font-size: 3rem;
@@ -256,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pointer-events: none;
             animation: floatChessPiece 20s infinite linear;
             animation-delay: ${Math.random() * 20}s;
+            opacity: 0;
         `;
         
         piece.innerHTML = `<i class="fas fa-chess-${chessPieces[Math.floor(Math.random() * chessPieces.length)]}"></i>`;
@@ -263,26 +259,92 @@ document.addEventListener('DOMContentLoaded', () => {
         piece.style.top = `${Math.random() * 100}%`;
         
         chessBoard.appendChild(piece);
+        
+        // Animate piece in
+        setTimeout(() => {
+            piece.style.opacity = '1';
+            piece.style.transform = 'translateY(0)';
+        }, i * 200);
     }
     
-    // Add floating animation
+    // Add floating animation style
     const floatStyle = document.createElement('style');
     floatStyle.textContent = `
         @keyframes floatChessPiece {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translateY(100vh) rotate(0deg);
             }
             100% {
                 transform: translateY(-100vh) rotate(360deg);
             }
         }
+        
+        .floating-piece {
+            transition: opacity 1s ease, transform 1s ease;
+        }
     `;
     document.head.appendChild(floatStyle);
+    
+    // Add hover effects with reveal animations
+    const interactiveElements = document.querySelectorAll('.website-card, .highlight-item, .video-card, .platform-btn');
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            if (this.classList.contains('reveal-left')) {
+                this.style.transform = 'translateX(-8px)';
+            } else if (this.classList.contains('reveal-right')) {
+                this.style.transform = 'translateX(8px)';
+            } else {
+                this.style.transform = 'translateY(-5px)';
+            }
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            if (this.classList.contains('reveal-left') && this.classList.contains('visible')) {
+                this.style.transform = 'translateX(0)';
+            } else if (this.classList.contains('reveal-right') && this.classList.contains('visible')) {
+                this.style.transform = 'translateX(0)';
+            } else if (this.classList.contains('visible')) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+    });
+    
+    // Add video play functionality with reveal
+    const videoCards = document.querySelectorAll('.video-card');
+    videoCards.forEach(card => {
+        const playBtn = card.querySelector('.play-btn');
+        if (playBtn) {
+            playBtn.classList.add('reveal-up');
+            playBtn.style.opacity = '0';
+            
+            card.addEventListener('mouseenter', function() {
+                playBtn.classList.add('visible');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                playBtn.classList.remove('visible');
+            });
+            
+            playBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoTitle = card.querySelector('h3').textContent;
+                chessProfile.showNotification(`Playing: ${videoTitle}`);
+            });
+        }
+        
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.play-btn')) {
+                const videoTitle = this.querySelector('h3').textContent;
+                chessProfile.showNotification(`Opening: ${videoTitle}`);
+            }
+        });
+    });
 });
 
-// Handle window resize
+// Handle window resize - re-trigger animations
 window.addEventListener('resize', () => {
-    // Re-trigger animations on resize
     const chessProfile = new ChessProfilePage();
-    chessProfile.triggerRevealAnimations();
+    setTimeout(() => {
+        chessProfile.triggerRevealAnimations();
+    }, 300);
 });
