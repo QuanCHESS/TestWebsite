@@ -1,193 +1,314 @@
-// Parallax Effect cho ảnh nền
-document.addEventListener('DOMContentLoaded', function() {
-    const parallaxBg = document.getElementById('parallax-bg');
-    const heroSection = document.querySelector('.hero');
-    const heroHeight = heroSection.offsetHeight;
-    let lastScrollTop = 0;
-    
-    // Hiệu ứng parallax khi scroll
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+class SceneManager {
+    constructor() {
+        this.scenes = document.querySelectorAll('.scene');
+        this.navDots = document.querySelectorAll('.nav-dot');
+        this.currentScene = 1;
+        this.totalScenes = this.scenes.length;
+        this.isScrolling = false;
+        this.scrollDelay = 1000;
+        this.lastScrollTime = Date.now();
         
-        // Hiệu ứng parallax cho ảnh nền
-        if (scrollTop <= heroHeight) {
-            // Tính toán scale dựa trên vị trí scroll
-            const scale = 1 + (scrollTop * 0.0005);
-            const translateY = scrollTop * 0.5;
-            
-            parallaxBg.style.transform = `translateY(${translateY}px) scale(${scale})`;
-            
-            // Điều chỉnh độ mờ của overlay
-            const overlay = document.querySelector('.bg-overlay');
-            const opacity = 0.85 - (scrollTop * 0.001);
-            overlay.style.opacity = Math.max(opacity, 0.7);
-        }
-        
-        lastScrollTop = scrollTop;
-        
-        // Gọi hàm reveal animation
-        reveal();
-    });
-    
-    // Reveal animation on scroll
-    function reveal() {
-        const reveals = document.querySelectorAll('.reveal');
-        
-        for (let i = 0; i < reveals.length; i++) {
-            const windowHeight = window.innerHeight;
-            const elementTop = reveals[i].getBoundingClientRect().top;
-            const elementVisible = 150;
-            
-            if (elementTop < windowHeight - elementVisible) {
-                reveals[i].classList.add('active');
-            }
-        }
+        this.init();
     }
     
-    // Smooth scroll cho nút scroll down
-    const scrollDownBtn = document.querySelector('.scroll-down-btn');
-    if (scrollDownBtn) {
-        scrollDownBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('#profile').scrollIntoView({
-                behavior: 'smooth'
+    init() {
+        this.setupEventListeners();
+        this.animateOnLoad();
+        this.setupSmoothScroll();
+        this.setupProgressBar();
+        this.updateScene(1);
+    }
+    
+    setupEventListeners() {
+        // Mouse wheel scroll
+        window.addEventListener('wheel', (e) => this.handleScroll(e), { passive: false });
+        
+        // Touch events for mobile
+        let touchStartY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        window.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaY = touchStartY - touchEndY;
+            
+            if (Math.abs(deltaY) > 50) {
+                if (deltaY > 0) {
+                    this.nextScene();
+                } else {
+                    this.previousScene();
+                }
+            }
+        }, { passive: true });
+        
+        // Navigation dots
+        this.navDots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const sceneNumber = parseInt(e.target.dataset.scene);
+                this.goToScene(sceneNumber);
             });
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                this.nextScene();
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                this.previousScene();
+            } else if (e.key >= '1' && e.key <= '5') {
+                this.goToScene(parseInt(e.key));
+            }
         });
     }
     
-    // Animate stats counter
-    const statNumbers = document.querySelectorAll('.stat-number');
+    handleScroll(e) {
+        e.preventDefault();
+        
+        const currentTime = Date.now();
+        if (currentTime - this.lastScrollTime < this.scrollDelay || this.isScrolling) {
+            return;
+        }
+        
+        this.lastScrollTime = currentTime;
+        
+        if (e.deltaY > 0) {
+            this.nextScene();
+        } else {
+            this.previousScene();
+        }
+    }
     
-    statNumbers.forEach(stat => {
-        const target = parseInt(stat.innerText);
-        let current = 0;
-        const increment = target / 50;
+    nextScene() {
+        if (this.currentScene < this.totalScenes) {
+            this.goToScene(this.currentScene + 1);
+        }
+    }
+    
+    previousScene() {
+        if (this.currentScene > 1) {
+            this.goToScene(this.currentScene - 1);
+        }
+    }
+    
+    goToScene(sceneNumber) {
+        if (this.isScrolling || sceneNumber < 1 || sceneNumber > this.totalScenes) {
+            return;
+        }
         
-        const updateNumber = () => {
-            if (current < target) {
-                current += increment;
-                stat.innerText = Math.floor(current);
-                setTimeout(updateNumber, 30);
-            } else {
-                stat.innerText = target;
+        this.isScrolling = true;
+        this.currentScene = sceneNumber;
+        
+        // Animate background before scene change
+        const currentScene = document.querySelector(`.scene-${sceneNumber}`);
+        const bg = currentScene.querySelector('.scene-bg');
+        
+        // Reset and animate background
+        bg.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            bg.style.transform = 'scale(1)';
+        }, 50);
+        
+        // Update scenes
+        this.scenes.forEach(scene => {
+            scene.classList.remove('active');
+        });
+        
+        const targetScene = document.querySelector(`.scene-${sceneNumber}`);
+        targetScene.classList.add('active');
+        
+        // Update navigation dots
+        this.navDots.forEach(dot => {
+            dot.classList.remove('active');
+            if (parseInt(dot.dataset.scene) === sceneNumber) {
+                dot.classList.add('active');
             }
-        };
+        });
         
-        // Start counting when element is visible
+        // Animate elements on scroll
+        setTimeout(() => {
+            this.animateOnScroll();
+            this.updateProgressBar();
+            this.isScrolling = false;
+        }, 800);
+    }
+    
+    animateOnLoad() {
+        const elements = document.querySelectorAll('.animate-on-load');
+        elements.forEach((element, index) => {
+            const delay = element.dataset.delay || 0;
+            setTimeout(() => {
+                element.style.animationDelay = `${delay}s`;
+                element.classList.add('animated');
+            }, index * 100);
+        });
+    }
+    
+    animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        const sceneContent = document.querySelector('.scene.active .scene-content');
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    updateNumber();
-                    observer.unobserve(entry.target);
+                    const element = entry.target;
+                    const delay = element.dataset.delay || 0;
+                    
+                    setTimeout(() => {
+                        element.classList.add('active');
+                    }, parseFloat(delay) * 1000);
+                    
+                    observer.unobserve(element);
                 }
             });
-        }, { threshold: 0.5 });
-        
-        observer.observe(stat.parentElement);
-    });
-    
-    // Animate skill tags on hover
-    document.querySelectorAll('.skill-tag').forEach(tag => {
-        tag.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.05)';
+        }, {
+            root: sceneContent,
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
         });
         
-        tag.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+        elements.forEach(element => {
+            observer.observe(element);
         });
-    });
-    
-    // Add click effect to project cards
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', function() {
-            this.style.transform = 'translateY(-20px) scale(1.02)';
+        
+        // Animate skill bars
+        const skillBars = document.querySelectorAll('.skill-level');
+        skillBars.forEach(bar => {
+            const level = bar.dataset.level;
             setTimeout(() => {
-                this.style.transform = 'translateY(-15px)';
-            }, 150);
+                bar.style.width = `${level}%`;
+            }, 500);
         });
-    });
+    }
     
-    // Typing effect for profile title
-    const profileTitle = document.querySelector('.profile-title');
-    if (profileTitle) {
-        const originalText = profileTitle.textContent;
-        profileTitle.textContent = '';
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < originalText.length) {
-                profileTitle.textContent += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        }
-        
-        // Start typing when profile section is visible
-        const profileObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(typeWriter, 500);
-                    profileObserver.unobserve(entry.target);
-                }
+    setupSmoothScroll() {
+        // Smooth scroll within scene content
+        const sceneContent = document.querySelectorAll('.scene-content');
+        sceneContent.forEach(content => {
+            content.addEventListener('wheel', (e) => {
+                e.stopPropagation();
             });
-        }, { threshold: 0.3 });
-        
-        profileObserver.observe(document.querySelector('.profile-section'));
+        });
+    }
+    
+    setupProgressBar() {
+        this.progressBar = document.querySelector('.progress-bar');
+        this.updateProgressBar();
+    }
+    
+    updateProgressBar() {
+        const progress = ((this.currentScene - 1) / (this.totalScenes - 1)) * 100;
+        this.progressBar.style.width = `${progress}%`;
+    }
+    
+    updateScene(sceneNumber) {
+        this.goToScene(sceneNumber);
+    }
+}
+
+// Initialize scene manager when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const sceneManager = new SceneManager();
+    
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.querySelector('span').textContent;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Show success state
+                submitBtn.innerHTML = '<i class="fas fa-check"></i><span>Đã gửi!</span>';
+                submitBtn.style.background = 'linear-gradient(135deg, #00ff88 0%, #00cc66 100%)';
+                
+                // Reset form
+                setTimeout(() => {
+                    contactForm.reset();
+                    submitBtn.innerHTML = `<span>${originalText}</span><i class="fas fa-paper-plane"></i>`;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
     }
     
     // Add floating animation to avatar
     const avatar = document.querySelector('.avatar');
     if (avatar) {
-        let floatDirection = 1;
-        let floatPosition = 0;
+        let angle = 0;
         
         function floatAvatar() {
-            floatPosition += 0.5 * floatDirection;
-            
-            if (floatPosition > 5) {
-                floatDirection = -1;
-            } else if (floatPosition < -5) {
-                floatDirection = 1;
-            }
-            
-            avatar.style.transform = `translateY(${floatPosition}px) scale(1.05)`;
+            angle += 0.5;
+            const y = Math.sin(angle * Math.PI / 180) * 10;
+            avatar.style.transform = `translateY(${y}px)`;
             requestAnimationFrame(floatAvatar);
         }
         
-        // Start floating when avatar is visible
-        const avatarObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    floatAvatar();
-                    avatarObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        avatarObserver.observe(avatar);
+        floatAvatar();
     }
     
-    // Add scroll progress indicator
-    const progressBar = document.createElement('div');
-    progressBar.id = 'scroll-progress';
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
-        z-index: 1000;
-        transition: width 0.1s;
-    `;
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', function() {
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (window.pageYOffset / windowHeight) * 100;
-        progressBar.style.width = scrolled + '%';
+    // Add ripple effect to social items
+    document.querySelectorAll('.social-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                width: ${size}px;
+                height: ${size}px;
+                top: ${y}px;
+                left: ${x}px;
+            `;
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
     });
     
-    // Initialize reveal on page load
-    reveal();
+    // Add CSS for ripple effect
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+});
+
+// Add parallax effect to backgrounds
+window.addEventListener('scroll', () => {
+    const activeScene = document.querySelector('.scene.active');
+    if (activeScene) {
+        const bg = activeScene.querySelector('.scene-bg');
+        const scrollPosition = window.pageYOffset;
+        const parallaxValue = scrollPosition * 0.5;
+        
+        bg.style.transform = `translateY(${parallaxValue}px) scale(1)`;
+    }
 });
