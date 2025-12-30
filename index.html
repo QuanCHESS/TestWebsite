@@ -3,240 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Profile | Chess Developer</title>
+    <title>QuanCHESS - YouTube Chess Content Creator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Fixed Background -->
-    <div class="chess-background"></div>
+    <!-- Chess Board Background -->
+    <div class="chess-board"></div>
     
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-chess-king"></i>
+            <h1>Quan<span class="highlight">CHESS</span></h1>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+            <button class="tab-btn" data-tab="achievements">
+                <i class="fas fa-trophy"></i>
+                <span>Achievements</span>
+            </button>
+            <button class="tab-btn" data-tab="videos">
+                <i class="fas fa-play-circle"></i>
+                <span>Videos</span>
+            </button>
+            <button class="tab-btn" data-tab="contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </button>
+        </nav>
+    </header>
+
     <!-- Main Content -->
-    <main class="main-container">
-        <!-- Hero Section -->
-        <section class="section hero active">
-            <div class="section-content">
-                <div class="hero-chess">
-                    <i class="fas fa-chess-king"></i>
-                </div>
-                <h1 class="hero-title">
-                    Code như chơi cờ<br>
-                    <span class="highlight">Mỗi nước đi đều tính toán</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Full Stack Developer & Chess Enthusiast
-                </p>
-                <div class="scroll-hint">
-                    <i class="fas fa-chevron-down"></i>
-                    <span>Scroll để khám phá</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Profile Section -->
-        <section class="section profile">
-            <div class="section-content">
-                <div class="profile-header">
-                    <div class="avatar-container">
+    <main class="main-content">
+        <!-- Profile Tab -->
+        <section class="tab-content active" id="profile">
+            <div class="profile-container">
+                <div class="profile-left">
+                    <div class="avatar-wrapper">
                         <div class="avatar">
-                            <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Developer">
-                        </div>
-                        <div class="chess-badge">
-                            <i class="fas fa-chess"></i>
-                        </div>
-                    </div>
-                    <div class="profile-info">
-                        <h2 class="section-title">Trần Minh Cờ</h2>
-                        <p class="profile-tag">Senior Full Stack Developer</p>
-                        <div class="stats">
-                            <div class="stat">
-                                <div class="stat-number">5+</div>
-                                <div class="stat-label">Năm kinh nghiệm</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-number">ELO 1800</div>
-                                <div class="stat-label">Xếp hạng cờ</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-number">50+</div>
-                                <div class="stat-label">Dự án</div>
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="QuanCHESS">
+                            <div class="rank-badge">
+                                <i class="fas fa-chess-queen"></i>
+                                <span>IM</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="about-me">
-                    <h3><i class="fas fa-chess-board"></i> Về tôi</h3>
-                    <p>Kết hợp tư duy chiến lược từ cờ vua vào lập trình. Mỗi dự án là một ván cờ cần chiến lược rõ ràng, nước đi chính xác và khả năng thích ứng.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="section skills">
-            <div class="section-content">
-                <h2 class="section-title">
-                    <i class="fas fa-chess-knight"></i>
-                    Kỹ năng chiến lược
-                </h2>
-                
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-chess-pawn"></i>
-                        </div>
-                        <h3>Frontend Development</h3>
-                        <div class="skill-items">
-                            <span>React</span>
-                            <span>Vue.js</span>
-                            <span>TypeScript</span>
-                            <span>Tailwind</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-chess-rook"></i>
-                        </div>
-                        <h3>Backend Development</h3>
-                        <div class="skill-items">
-                            <span>Node.js</span>
-                            <span>Python</span>
-                            <span>PostgreSQL</span>
-                            <span>Redis</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-chess-bishop"></i>
-                        </div>
-                        <h3>DevOps & Tools</h3>
-                        <div class="skill-items">
-                            <span>Docker</span>
-                            <span>AWS</span>
-                            <span>Git</span>
-                            <span>CI/CD</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="section projects">
-            <div class="section-content">
-                <h2 class="section-title">
-                    <i class="fas fa-chess-queen"></i>
-                    Dự án tiêu biểu
-                </h2>
-                
-                <div class="projects-list">
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>Chess Analytics AI</h3>
-                            <span class="project-tag">AI/ML</span>
-                        </div>
-                        <p class="project-desc">Phân tích ván cờ với machine learning, dự đoán nước đi tối ưu.</p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>TensorFlow</span>
-                            <span>FastAPI</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>Code Battle Platform</h3>
-                            <span class="project-tag">Full Stack</span>
-                        </div>
-                        <p class="project-desc">Nền tảng thi đấu lập trình với hệ thống chấm điểm tự động.</p>
-                        <div class="project-tech">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>Portfolio Generator</h3>
-                            <span class="project-tag">Tool</span>
-                        </div>
-                        <p class="project-desc">Tự động tạo portfolio từ GitHub profile với AI hỗ trợ.</p>
-                        <div class="project-tech">
-                            <span>Next.js</span>
-                            <span>OpenAI API</span>
-                            <span>Tailwind</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section contact">
-            <div class="section-content">
-                <div class="contact-wrapper">
-                    <div class="contact-info">
-                        <h2 class="section-title">
-                            <i class="fas fa-chess-king"></i>
-                            Kết nối
-                        </h2>
-                        <p class="contact-desc">
-                            Luôn mở cho cơ hội hợp tác mới. Hãy liên hệ nếu bạn có dự án thú vị!
-                        </p>
                         
-                        <div class="contact-details">
-                            <a href="#" class="contact-item">
-                                <i class="fab fa-github"></i>
-                                <span>github.com/chess-dev</span>
-                            </a>
-                            <a href="#" class="contact-item">
-                                <i class="fab fa-linkedin"></i>
-                                <span>linkedin.com/in/chess-dev</span>
-                            </a>
-                            <a href="#" class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>hello@chessdev.com</span>
-                            </a>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-number">500K+</div>
+                                <div class="stat-label">Subscribers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100M+</div>
+                                <div class="stat-label">Views</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">ELO 2400</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="chess-final">
-                        <div class="chess-piece-final">
-                            <i class="fas fa-chess-queen"></i>
+                    <div class="social-links">
+                        <h3>Connect with me:</h3>
+                        <div class="platforms">
+                            <a href="#" class="platform-btn youtube">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                            <a href="#" class="platform-btn twitch">
+                                <i class="fab fa-twitch"></i>
+                                <span>Twitch</span>
+                            </a>
+                            <a href="#" class="platform-btn twitter">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a href="#" class="platform-btn instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
                         </div>
-                        <p class="chess-quote">
-                            "Trong cờ cũng như code, chiến thắng thuộc về người có chiến lược rõ ràng."
-                        </p>
                     </div>
                 </div>
                 
-                <footer class="page-footer">
-                    <div class="footer-content">
-                        <div class="footer-brand">
-                            <i class="fas fa-chess-board"></i>
-                            Chess<span>Dev</span>
+                <div class="profile-right">
+                    <div class="websites-section">
+                        <h2><i class="fas fa-globe"></i> Platforms & Tools</h2>
+                        <div class="websites-grid">
+                            <div class="website-card">
+                                <div class="website-icon chessable">
+                                    <i class="fas fa-chess-board"></i>
+                                </div>
+                                <div class="website-info">
+                                    <h3>Chess.com</h3>
+                                    <p>Main playing platform</p>
+                                    <span class="website-tag">Daily Games</span>
+                                </div>
+                            </div>
+                            <div class="website-card">
+                                <div class="website-icon lichess">
+                                    <i class="fas fa-chess-king"></i>
+                                </div>
+                                <div class="website-info">
+                                    <h3>Lichess.org</h3>
+                                    <p>Analysis & Training</p>
+                                    <span class="website-tag">Puzzles</span>
+                                </div>
+                            </div>
+                            <div class="website-card">
+                                <div class="website-icon chess24">
+                                    <i class="fas fa-chess-rook"></i>
+                                </div>
+                                <div class="website-info">
+                                    <h3>Chess24</h3>
+                                    <p>Tournament coverage</p>
+                                    <span class="website-tag">Live Events</span>
+                                </div>
+                            </div>
+                            <div class="website-card">
+                                <div class="website-icon stockfish">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="website-info">
+                                    <h3>Stockfish</h3>
+                                    <p>Analysis engine</p>
+                                    <span class="website-tag">AI Analysis</span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="footer-copy">
-                            © 2023 Chess Developer. Mọi chiến lược đều được tính toán kỹ.
-                        </p>
                     </div>
-                </footer>
+                    
+                    <div class="description-section">
+                        <h2><i class="fas fa-feather-alt"></i> About QuanCHESS</h2>
+                        <div class="description-content">
+                            <p>International Master with a passion for making chess accessible and entertaining for everyone. Through YouTube, I share educational content, game analyses, and chess entertainment.</p>
+                            
+                            <div class="highlights">
+                                <div class="highlight-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <div>
+                                        <h4>Educational Content</h4>
+                                        <p>Clear, concise lessons for all levels</p>
+                                    </div>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fas fa-gamepad"></i>
+                                    <div>
+                                        <h4>Entertainment Focus</h4>
+                                        <p>Fun and engaging chess content</p>
+                                    </div>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fas fa-users"></i>
+                                    <div>
+                                        <h4>Community Driven</h4>
+                                        <p>Interactive streams and community games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Tab -->
+        <section class="tab-content" id="achievements">
+            <div class="achievements-container">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Chess Milestones
+                </h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2023</div>
+                        <div class="timeline-content">
+                            <h3>International Master Title</h3>
+                            <p>Awarded IM title by FIDE after achieving final norms at Asian Chess Championship</p>
+                            <div class="achievement-tags">
+                                <span class="tag">Title</span>
+                                <span class="tag">FIDE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-content">
+                            <h3>500K YouTube Subscribers</h3>
+                            <p>Reached half a million subscribers on YouTube chess channel</p>
+                            <div class="achievement-tags">
+                                <span class="tag">YouTube</span>
+                                <span class="tag">Milestone</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2021</div>
+                        <div class="timeline-content">
+                            <h3>National Champion</h3>
+                            <p>Won Vietnam National Chess Championship</p>
+                            <div class="achievement-tags">
+                                <span class="tag">Tournament</span>
+                                <span class="tag">Champion</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-content">
+                            <h3>First YouTube Partnership</h3>
+                            <p>Started full-time chess content creation on YouTube</p>
+                            <div class="achievement-tags">
+                                <span class="tag">Career</span>
+                                <span class="tag">Content</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2019</div>
+                        <div class="timeline-content">
+                            <h3>FIDE Master Title</h3>
+                            <p>Achieved FM title with peak rating of 2300</p>
+                            <div class="achievement-tags">
+                                <span class="tag">Title</span>
+                                <span class="tag">Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2018</div>
+                        <div class="timeline-content">
+                            <h3>First YouTube Video</h3>
+                            <p>Uploaded first chess tutorial video</p>
+                            <div class="achievement-tags">
+                                <span class="tag">YouTube</span>
+                                <span class="tag">Begin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos Tab -->
+        <section class="tab-content" id="videos">
+            <div class="videos-container">
+                <h2 class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    Featured Videos
+                </h2>
+                
+                <div class="video-grid">
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Opening">
+                            <div class="video-duration">18:42</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>The Queen's Gambit Masterclass</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 1.2M views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 95%</span>
+                            </p>
+                            <p class="video-desc">Complete guide to playing and countering the Queen's Gambit</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1528819622765-d6bcf132f793?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Tactics">
+                            <div class="video-duration">25:15</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>10 Chess Traps You Must Know</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 850K views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 97%</span>
+                            </p>
+                            <p class="video-desc">Learn these traps to win games in under 20 moves</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1543092587-d8b8feafc7b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Endgame">
+                            <div class="video-duration">32:10</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Endgame Fundamentals</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 720K views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 96%</span>
+                            </p>
+                            <p class="video-desc">Master the essential endgame techniques</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Analysis">
+                            <div class="video-duration">45:30</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Analyzing Magnus Carlsen's Games</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 2.1M views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 98%</span>
+                            </p>
+                            <p class="video-desc">In-depth analysis of World Champion's strategies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Puzzle">
+                            <div class="video-duration">15:22</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Daily Chess Puzzle Challenge</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 560K views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 94%</span>
+                            </p>
+                            <p class="video-desc">Solve tricky chess puzzles with me</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card reveal">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1570598912132-0ba1dc952b7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chess Stream">
+                            <div class="video-duration">3:45:20</div>
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>24-Hour Charity Chess Stream</h3>
+                            <p class="video-stats">
+                                <span><i class="fas fa-eye"></i> 3.5M views</span>
+                                <span><i class="fas fa-thumbs-up"></i> 99%</span>
+                            </p>
+                            <p class="video-desc">Marathon stream raising funds for chess education</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Tab -->
+        <section class="tab-content" id="contact">
+            <div class="contact-container">
+                <div class="contact-left">
+                    <h2 class="section-title">
+                        <i class="fas fa-envelope"></i>
+                        Get In Touch
+                    </h2>
+                    
+                    <p class="contact-intro">For business inquiries, collaborations, or just to say hello!</p>
+                    
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject">
+                                <option value="">Select a subject</option>
+                                <option value="collab">Collaboration Request</option>
+                                <option value="lesson">Chess Lessons</option>
+                                <option value="sponsor">Sponsorship</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Your message..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-right">
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contact@quanchess.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Business Phone</h4>
+                                <p>+84 123 456 789</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Hanoi, Vietnam</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Response Time</h4>
+                                <p>Within 48 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="business-hours">
+                        <h3>Business Hours</h3>
+                        <ul>
+                            <li>Monday - Friday: 9AM - 6PM</li>
+                            <li>Saturday: 10AM - 4PM</li>
+                            <li>Sunday: Closed</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="quick-links">
+                        <h3>Quick Links</h3>
+                        <div class="link-buttons">
+                            <a href="#" class="link-btn">
+                                <i class="fab fa-youtube"></i>
+                                YouTube Channel
+                            </a>
+                            <a href="#" class="link-btn">
+                                <i class="fas fa-chess"></i>
+                                Chess Profile
+                            </a>
+                            <a href="#" class="link-btn">
+                                <i class="fas fa-file-pdf"></i>
+                                Media Kit
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
-
-    <!-- Navigation Dots -->
-    <nav class="nav-dots">
-        <div class="dot active" data-index="0"></div>
-        <div class="dot" data-index="1"></div>
-        <div class="dot" data-index="2"></div>
-        <div class="dot" data-index="3"></div>
-        <div class="dot" data-index="4"></div>
-    </nav>
 
     <!-- Scroll Progress -->
     <div class="scroll-progress">
