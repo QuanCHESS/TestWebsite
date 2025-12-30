@@ -3,232 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Profile với Parallax Animation</title>
+    <title>GitHub Profile | Smooth Scene Transition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Hero Section với ảnh nền parallax -->
-    <section class="hero">
-        <div class="parallax-bg" id="parallax-bg">
-            <div class="bg-overlay"></div>
-        </div>
+    <!-- Scene 1: Hero với background parallax -->
+    <section class="scene scene-1 active">
+        <div class="scene-bg"></div>
+        <div class="scene-overlay"></div>
         
-        <div class="hero-content">
-            <div class="logo">
-                <i class="fab fa-github"></i>GitHub Profile
+        <div class="scene-content">
+            <div class="logo animate-on-load">
+                <i class="fab fa-github"></i>GitHub<span class="highlight">Flow</span>
             </div>
-            <h1 class="hero-title">Chào mừng đến với <span class="highlight">GitHub Profile</span></h1>
-            <p class="hero-subtitle">Một trang portfolio đẹp với hiệu ứng parallax và reveal animation</p>
-            <a href="#profile" class="scroll-down-btn">
-                <i class="fas fa-chevron-down"></i>
-            </a>
+            <h1 class="scene-title animate-on-load" data-delay="0.2">
+                Xin chào, tôi là <span class="highlight">Developer</span>
+            </h1>
+            <p class="scene-subtitle animate-on-load" data-delay="0.4">
+                Chuyên gia Full Stack với đam mê sáng tạo và đổi mới
+            </p>
+            <div class="scene-indicator animate-on-load" data-delay="0.8">
+                <div class="indicator-line"></div>
+                <div class="indicator-text">Vuốt xuống để khám phá</div>
+            </div>
         </div>
     </section>
     
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Profile Section -->
-        <section id="profile" class="profile-section reveal">
-            <div class="avatar-container">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Avatar" class="avatar">
-                <div class="avatar-ring"></div>
-            </div>
-            
-            <div class="profile-info">
-                <h1 class="profile-name">Nguyễn Văn A</h1>
-                <div class="profile-title">Full Stack Developer & UI/UX Designer</div>
-                <p class="profile-description">
-                    Lập trình viên đam mê sáng tạo với 5 năm kinh nghiệm phát triển web và ứng dụng di động. 
-                    Luôn tìm kiếm những thách thức mới và công nghệ mới nhất để nâng cao kỹ năng.
-                </p>
+    <!-- Scene 2: Profile Section -->
+    <section class="scene scene-2">
+        <div class="scene-bg"></div>
+        <div class="scene-overlay"></div>
+        
+        <div class="scene-content">
+            <div class="profile-container">
+                <div class="avatar-wrapper animate-on-scroll">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Avatar" class="avatar">
+                        <div class="avatar-glow"></div>
+                    </div>
+                </div>
                 
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="social-link"><i class="fas fa-globe"></i></a>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Info Cards Section -->
-        <section class="info-section">
-            <div class="info-card reveal">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-user"></i>
+                <div class="profile-info animate-on-scroll" data-delay="0.2">
+                    <h2 class="profile-name">Nguyễn Văn A</h2>
+                    <div class="profile-title">Full Stack Developer</div>
+                    <p class="profile-bio">
+                        Với hơn 5 năm kinh nghiệm trong lĩnh vực phát triển web, tôi đã tham gia vào nhiều dự án từ startup đến doanh nghiệp lớn. Đam mê của tôi là tạo ra những sản phẩm chất lượng cao với trải nghiệm người dùng tuyệt vời.
+                    </p>
+                    
+                    <div class="social-flow">
+                        <a href="#" class="social-item">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="#" class="social-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="#" class="social-item">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="#" class="social-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Portfolio</span>
+                        </a>
                     </div>
-                    <h3 class="card-title">Thông Tin Cá Nhân</h3>
-                </div>
-                <div class="card-content">
-                    <p><strong>Địa điểm:</strong> Hà Nội, Việt Nam</p>
-                    <p><strong>Email:</strong> nguyenvana@example.com</p>
-                    <p><strong>Số điện thoại:</strong> +84 123 456 789</p>
-                    <p><strong>Ngôn ngữ:</strong> Tiếng Việt, Tiếng Anh</p>
                 </div>
             </div>
             
-            <div class="info-card reveal">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3 class="card-title">Học Vấn</h3>
-                </div>
-                <div class="card-content">
-                    <p><strong>Đại học Bách Khoa Hà Nội</strong></p>
-                    <p>Cử nhân Công nghệ Thông tin</p>
-                    <p>2015 - 2019</p>
-                    <p>GPA: 3.6/4.0</p>
-                </div>
+            <div class="scene-indicator">
+                <div class="indicator-line"></div>
+                <div class="indicator-text">Tiếp tục khám phá</div>
             </div>
+        </div>
+    </section>
+    
+    <!-- Scene 3: Skills & Expertise -->
+    <section class="scene scene-3">
+        <div class="scene-bg"></div>
+        <div class="scene-overlay"></div>
+        
+        <div class="scene-content">
+            <h2 class="scene-title animate-on-scroll">Kỹ Năng & Chuyên Môn</h2>
             
-            <div class="info-card reveal">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-code"></i>
+            <div class="skills-grid">
+                <div class="skill-category animate-on-scroll">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Frontend</h3>
                     </div>
-                    <h3 class="card-title">Kỹ Năng</h3>
-                </div>
-                <div class="card-content">
-                    <div class="skills-container">
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">UI/UX Design</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Stats Section -->
-        <section class="stats-section reveal">
-            <h2 class="section-title">Thống Kê GitHub</h2>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-number">124</div>
-                    <div class="stat-label">Repository</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1,254</div>
-                    <div class="stat-label">Commits</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">89</div>
-                    <div class="stat-label">Đóng góp</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">42</div>
-                    <div class="stat-label">Dự án</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Projects Section -->
-        <section class="projects-section reveal">
-            <h2 class="section-title">Dự Án Nổi Bật</h2>
-            <div class="projects-container">
-                <div class="project-card reveal">
-                    <div class="project-image">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">E-commerce Platform</h3>
-                        <p class="project-description">Nền tảng thương mại điện tử với React và Node.js, tích hợp thanh toán trực tuyến.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Node.js</span>
-                            <span class="project-tag">MongoDB</span>
-                            <span class="project-tag">Stripe API</span>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">React</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Vue.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">TypeScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">CSS/SCSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="95"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="project-card reveal">
-                    <div class="project-image">
-                        <i class="fas fa-mobile-alt"></i>
+                <div class="skill-category animate-on-scroll" data-delay="0.1">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Backend</h3>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Fitness App</h3>
-                        <p class="project-description">Ứng dụng theo dõi thể dục với React Native, tính năng theo dõi tiến độ và lập kế hoạch tập luyện.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">React Native</span>
-                            <span class="project-tag">Firebase</span>
-                            <span class="project-tag">Redux</span>
-                            <span class="project-tag">Health API</span>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">PostgreSQL</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Redis</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="75"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="project-card reveal">
-                    <div class="project-image">
-                        <i class="fas fa-chart-line"></i>
+                <div class="skill-category animate-on-scroll" data-delay="0.2">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Công cụ & Khác</h3>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Data Visualization Dashboard</h3>
-                        <p class="project-description">Bảng điều khiển trực quan hóa dữ liệu với D3.js và React, hiển thị dữ liệu thời gian thực.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">D3.js</span>
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Chart.js</span>
-                            <span class="project-tag">WebSocket</span>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">Docker</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Git</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">AWS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Figma</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="85"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+            
+            <div class="scene-indicator">
+                <div class="indicator-line"></div>
+                <div class="indicator-text">Tiếp tục hành trình</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Scene 4: Projects Showcase -->
+    <section class="scene scene-4">
+        <div class="scene-bg"></div>
+        <div class="scene-overlay"></div>
         
-        <!-- Experience Timeline -->
-        <section class="timeline-section reveal">
-            <h2 class="section-title">Kinh Nghiệm Làm Việc</h2>
-            <div class="timeline">
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2022 - Hiện tại</div>
-                    <div class="timeline-content">
-                        <h3>Công ty Công nghệ ABC</h3>
-                        <p class="timeline-subtitle">Senior Full Stack Developer</p>
-                        <p>Phát triển các ứng dụng web và mobile cho khách hàng lớn, quản lý team 5 developer.</p>
+        <div class="scene-content">
+            <h2 class="scene-title animate-on-scroll">Dự Án Tiêu Biểu</h2>
+            
+            <div class="projects-showcase">
+                <div class="project-card animate-on-scroll">
+                    <div class="project-visual">
+                        <div class="project-image">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="project-tech">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h3>E-commerce Platform</h3>
+                        <p class="project-description">
+                            Nền tảng thương mại điện tử hiện đại với đầy đủ tính năng từ giỏ hàng, thanh toán đến quản lý đơn hàng.
+                        </p>
+                        <a href="#" class="project-link">Xem chi tiết →</a>
                     </div>
                 </div>
                 
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2020 - 2022</div>
-                    <div class="timeline-content">
-                        <h3>Công ty Startup XYZ</h3>
-                        <p class="timeline-subtitle">Frontend Developer</p>
-                        <p>Xây dựng giao diện người dùng cho các sản phẩm công ty, tối ưu hiệu suất và trải nghiệm.</p>
+                <div class="project-card animate-on-scroll" data-delay="0.1">
+                    <div class="project-visual">
+                        <div class="project-image">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-tech">
+                            <span>Vue.js</span>
+                            <span>D3.js</span>
+                            <span>WebSocket</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h3>Real-time Analytics Dashboard</h3>
+                        <p class="project-description">
+                            Bảng điều khiển hiển thị dữ liệu thời gian thực với các biểu đồ tương tác và báo cáo tự động.
+                        </p>
+                        <a href="#" class="project-link">Xem chi tiết →</a>
                     </div>
                 </div>
                 
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2019 - 2020</div>
-                    <div class="timeline-content">
-                        <h3>Công ty DEF</h3>
-                        <p class="timeline-subtitle">Junior Web Developer</p>
-                        <p>Phát triển và bảo trì website công ty, học hỏi các công nghệ mới trong môi trường chuyên nghiệp.</p>
+                <div class="project-card animate-on-scroll" data-delay="0.2">
+                    <div class="project-visual">
+                        <div class="project-image">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="project-tech">
+                            <span>React Native</span>
+                            <span>Firebase</span>
+                            <span>Redux</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h3>Fitness Tracking App</h3>
+                        <p class="project-description">
+                            Ứng dụng theo dõi sức khỏe với AI đề xuất bài tập, theo dõi tiến độ và kết nối cộng đồng.
+                        </p>
+                        <a href="#" class="project-link">Xem chi tiết →</a>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer>
-            <div class="footer-links">
-                <a href="#" class="footer-link">GitHub</a>
-                <a href="#" class="footer-link">LinkedIn</a>
-                <a href="#" class="footer-link">Portfolio</a>
-                <a href="#" class="footer-link">Blog</a>
+            
+            <div class="scene-indicator">
+                <div class="indicator-line"></div>
+                <div class="indicator-text">Khám phá thêm</div>
             </div>
-            <p>&copy; 2023 Nguyễn Văn A. Tất cả các quyền được bảo lưu.</p>
-            <p>Made with <i class="fas fa-heart" style="color: #e74c3c;"></i> and <i class="fas fa-code" style="color: var(--accent-color);"></i></p>
-        </footer>
+        </div>
+    </section>
+    
+    <!-- Scene 5: Contact & Footer -->
+    <section class="scene scene-5">
+        <div class="scene-bg"></div>
+        <div class="scene-overlay"></div>
+        
+        <div class="scene-content">
+            <div class="contact-container">
+                <div class="contact-info animate-on-scroll">
+                    <h2 class="scene-title">Kết Nối Với Tôi</h2>
+                    <p class="contact-description">
+                        Luôn sẵn sàng cho các cơ hội hợp tác mới và thử thách thú vị. Hãy liên hệ nếu bạn có dự án phù hợp!
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contact@nguyenvana.dev</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Điện thoại</h4>
+                                <p>+84 123 456 789</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Địa điểm</h4>
+                                <p>Hà Nội, Việt Nam</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form animate-on-scroll" data-delay="0.2">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Tên của bạn" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Nội dung tin nhắn" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <span>Gửi tin nhắn</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <footer class="main-footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <i class="fab fa-github"></i> GitHub<span>Flow</span>
+                    </div>
+                    <p class="footer-text">
+                        © 2023 Nguyễn Văn A. Tất cả các quyền được bảo lưu.<br>
+                        Được tạo ra với <i class="fas fa-heart"></i> và <i class="fas fa-code"></i>
+                    </p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+    
+    <!-- Navigation Dots -->
+    <div class="scene-nav">
+        <div class="nav-dot active" data-scene="1"></div>
+        <div class="nav-dot" data-scene="2"></div>
+        <div class="nav-dot" data-scene="3"></div>
+        <div class="nav-dot" data-scene="4"></div>
+        <div class="nav-dot" data-scene="5"></div>
+    </div>
+    
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="progress-bar"></div>
     </div>
 
     <script src="script.js"></script>
