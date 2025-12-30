@@ -1,205 +1,260 @@
-class SmoothScrollPage {
+class ChessProfilePage {
     constructor() {
-        this.sections = document.querySelectorAll('.section');
-        this.dots = document.querySelectorAll('.dot');
+        this.tabBtns = document.querySelectorAll('.tab-btn');
+        this.tabContents = document.querySelectorAll('.tab-content');
         this.progressBar = document.querySelector('.progress-bar');
-        this.currentSection = 0;
-        this.isScrolling = false;
-        this.scrollDelay = 800;
         
         this.init();
     }
     
     init() {
-        this.setupEventListeners();
-        this.setupScrollObserver();
-        this.updateNavigation();
+        this.setupTabs();
+        this.setupScrollReveal();
+        this.setupScrollProgress();
+        this.setupForm();
     }
     
-    setupEventListeners() {
-        // Handle wheel scroll
-        window.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            
-            if (this.isScrolling) return;
-            
-            if (e.deltaY > 0) {
-                this.nextSection();
-            } else {
-                this.previousSection();
-            }
-        }, { passive: false });
-        
-        // Handle touch swipe
-        let touchStartY = 0;
-        let touchStartTime = 0;
-        
-        window.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-            touchStartTime = Date.now();
-        });
-        
-        window.addEventListener('touchend', (e) => {
-            const touchEndY = e.changedTouches[0].clientY;
-            const touchEndTime = Date.now();
-            const deltaY = touchStartY - touchEndY;
-            const deltaTime = touchEndTime - touchStartTime;
-            
-            if (Math.abs(deltaY) > 50 && deltaTime < 300) {
-                if (deltaY > 0 && !this.isScrolling) {
-                    this.nextSection();
-                } else if (deltaY < 0 && !this.isScrolling) {
-                    this.previousSection();
-                }
-            }
-        });
-        
-        // Navigation dots
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                this.goToSection(index);
+    setupTabs() {
+        this.tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                this.switchTab(tabId);
             });
         });
     }
     
-    setupScrollObserver() {
+    switchTab(tabId) {
+        // Update active tab button
+        this.tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.tab === tabId) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Show active tab content
+        this.tabContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.id === tabId) {
+                content.classList.add('active');
+                
+                // Reset scroll position when switching tabs
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Trigger reveal animations for new content
+                setTimeout(() => {
+                    this.triggerRevealAnimations();
+                }, 300);
+            }
+        });
+    }
+    
+    setupScrollReveal() {
+        const revealElements = document.querySelectorAll('.reveal');
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const index = Array.from(this.sections).indexOf(entry.target);
-                    this.currentSection = index;
-                    this.updateNavigation();
-                    this.updateProgress();
+                    entry.target.classList.add('reveal');
                     
-                    // Animate chess pieces
-                    this.animateChessPieces(index);
+                    // Add delay based on data-delay attribute
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, delay * 100);
                 }
             });
         }, {
-            threshold: 0.5,
-            rootMargin: '0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         });
         
-        this.sections.forEach(section => {
-            observer.observe(section);
+        revealElements.forEach(element => {
+            observer.observe(element);
         });
+        
+        // Initial trigger
+        this.triggerRevealAnimations();
     }
     
-    nextSection() {
-        if (this.currentSection < this.sections.length - 1) {
-            this.goToSection(this.currentSection + 1);
+    triggerRevealAnimations() {
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab) {
+            const elements = activeTab.querySelectorAll('.reveal');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
         }
     }
     
-    previousSection() {
-        if (this.currentSection > 0) {
-            this.goToSection(this.currentSection - 1);
+    setupScrollProgress() {
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            this.progressBar.style.width = scrolled + "%";
+        });
+    }
+    
+    setupForm() {
+        const form = document.querySelector('.contact-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    // Show success state
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    submitBtn.style.background = '#27ae60';
+                    
+                    // Reset form
+                    setTimeout(() => {
+                        form.reset();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                        
+                        // Show success message
+                        this.showNotification('Message sent successfully!');
+                    }, 2000);
+                }, 1500);
+            });
         }
     }
     
-    goToSection(index) {
-        if (this.isScrolling || index < 0 || index >= this.sections.length) return;
+    showNotification(message) {
+        // Remove existing notification
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
         
-        this.isScrolling = true;
-        this.currentSection = index;
+        // Create new notification
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            </div>
+        `;
         
-        // Scroll to section
-        this.sections[index].scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        `;
         
-        this.updateNavigation();
-        this.updateProgress();
+        document.body.appendChild(notification);
         
-        // Reset scroll lock
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Remove notification after 3 seconds
         setTimeout(() => {
-            this.isScrolling = false;
-        }, this.scrollDelay);
-    }
-    
-    updateNavigation() {
-        // Update active section
-        this.sections.forEach((section, index) => {
-            section.classList.remove('active');
-            if (index === this.currentSection) {
-                section.classList.add('active');
-            }
-        });
-        
-        // Update dots
-        this.dots.forEach((dot, index) => {
-            dot.classList.remove('active');
-            if (index === this.currentSection) {
-                dot.classList.add('active');
-            }
-        });
-    }
-    
-    updateProgress() {
-        const progress = (this.currentSection / (this.sections.length - 1)) * 100;
-        this.progressBar.style.width = `${progress}%`;
-    }
-    
-    animateChessPieces(sectionIndex) {
-        const chessIcons = document.querySelectorAll('.fa-chess');
-        chessIcons.forEach((icon, index) => {
-            // Reset animation
-            icon.style.animation = 'none';
-            void icon.offsetWidth; // Trigger reflow
+            notification.style.animation = 'slideOut 0.3s ease forwards';
             
-            // Add bounce animation
-            icon.style.animation = `chessBounce 0.5s ease ${index * 0.1}s`;
-        });
+            const slideOutStyle = document.createElement('style');
+            slideOutStyle.textContent = `
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(slideOutStyle);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
     }
 }
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    const page = new SmoothScrollPage();
+    const chessProfile = new ChessProfilePage();
     
-    // Add hover effects
-    const skillCards = document.querySelectorAll('.skill-card, .project-card');
-    skillCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px)';
+    // Add hover effects to video cards
+    const videoCards = document.querySelectorAll('.video-card');
+    videoCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const playBtn = this.querySelector('.play-btn');
+            if (playBtn) {
+                playBtn.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            }
         });
         
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
+        card.addEventListener('mouseleave', function() {
+            const playBtn = this.querySelector('.play-btn');
+            if (playBtn) {
+                playBtn.style.transform = 'translate(-50%, -50%) scale(1)';
+            }
         });
     });
     
-    // Add CSS animation for chess pieces
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes chessBounce {
-            0%, 100% {
-                transform: translateY(0) scale(1);
+    // Add click event to video cards (simulate play)
+    videoCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.play-btn')) {
+                const title = this.querySelector('h3').textContent;
+                chessProfile.showNotification(`Playing: ${title}`);
             }
-            50% {
-                transform: translateY(-10px) scale(1.1);
-            }
-        }
-        
-        .fa-chess {
-            display: inline-block;
-        }
-    `;
-    document.head.appendChild(style);
+        });
+    });
     
-    // Add floating chess pieces in background
-    const background = document.querySelector('.chess-background');
+    // Add chess piece floating animation in background
+    const chessBoard = document.querySelector('.chess-board');
     const chessPieces = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn'];
     
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 8; i++) {
         const piece = document.createElement('div');
         piece.style.cssText = `
-            position: absolute;
-            font-size: 2rem;
-            color: rgba(218, 165, 32, 0.1);
+            position: fixed;
+            font-size: 3rem;
+            color: rgba(241, 196, 15, 0.05);
             z-index: -1;
-            animation: floatPiece 20s infinite linear;
+            pointer-events: none;
+            animation: floatChessPiece 20s infinite linear;
             animation-delay: ${Math.random() * 20}s;
         `;
         
@@ -207,13 +262,13 @@ document.addEventListener('DOMContentLoaded', () => {
         piece.style.left = `${Math.random() * 100}%`;
         piece.style.top = `${Math.random() * 100}%`;
         
-        background.appendChild(piece);
+        chessBoard.appendChild(piece);
     }
     
     // Add floating animation
     const floatStyle = document.createElement('style');
     floatStyle.textContent = `
-        @keyframes floatPiece {
+        @keyframes floatChessPiece {
             0% {
                 transform: translateY(0) rotate(0deg);
             }
@@ -227,10 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle window resize
 window.addEventListener('resize', () => {
-    // Force reflow on sections to fix scroll issues
-    document.querySelectorAll('.section').forEach(section => {
-        section.style.display = 'none';
-        void section.offsetWidth;
-        section.style.display = 'flex';
-    });
+    // Re-trigger animations on resize
+    const chessProfile = new ChessProfilePage();
+    chessProfile.triggerRevealAnimations();
 });
