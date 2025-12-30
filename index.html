@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Profile với Reveal Animation</title>
+    <title>GitHub Profile với Parallax Animation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
+    <!-- Hero Section với ảnh nền parallax -->
+    <section class="hero">
+        <div class="parallax-bg" id="parallax-bg">
+            <div class="bg-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
             <div class="logo">
                 <i class="fab fa-github"></i>GitHub Profile
             </div>
-            <div class="tagline">Một trang profile đẹp với hiệu ứng reveal animation</div>
-        </header>
-        
+            <h1 class="hero-title">Chào mừng đến với <span class="highlight">GitHub Profile</span></h1>
+            <p class="hero-subtitle">Một trang portfolio đẹp với hiệu ứng parallax và reveal animation</p>
+            <a href="#profile" class="scroll-down-btn">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <div class="container">
         <!-- Profile Section -->
-        <section class="profile-section reveal">
+        <section id="profile" class="profile-section reveal">
             <div class="avatar-container">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Avatar" class="avatar">
                 <div class="avatar-ring"></div>
@@ -99,7 +110,7 @@
         
         <!-- Stats Section -->
         <section class="stats-section reveal">
-            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--accent-color);">Thống Kê GitHub</h2>
+            <h2 class="section-title">Thống Kê GitHub</h2>
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-number">124</div>
@@ -122,9 +133,9 @@
         
         <!-- Projects Section -->
         <section class="projects-section reveal">
-            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--accent-color);">Dự Án Nổi Bật</h2>
+            <h2 class="section-title">Dự Án Nổi Bật</h2>
             <div class="projects-container">
-                <div class="project-card">
+                <div class="project-card reveal">
                     <div class="project-image">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
@@ -140,7 +151,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card reveal">
                     <div class="project-image">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
@@ -156,7 +167,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card reveal">
                     <div class="project-image">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -169,6 +180,39 @@
                             <span class="project-tag">Chart.js</span>
                             <span class="project-tag">WebSocket</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience Timeline -->
+        <section class="timeline-section reveal">
+            <h2 class="section-title">Kinh Nghiệm Làm Việc</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-date">2022 - Hiện tại</div>
+                    <div class="timeline-content">
+                        <h3>Công ty Công nghệ ABC</h3>
+                        <p class="timeline-subtitle">Senior Full Stack Developer</p>
+                        <p>Phát triển các ứng dụng web và mobile cho khách hàng lớn, quản lý team 5 developer.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-date">2020 - 2022</div>
+                    <div class="timeline-content">
+                        <h3>Công ty Startup XYZ</h3>
+                        <p class="timeline-subtitle">Frontend Developer</p>
+                        <p>Xây dựng giao diện người dùng cho các sản phẩm công ty, tối ưu hiệu suất và trải nghiệm.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-date">2019 - 2020</div>
+                    <div class="timeline-content">
+                        <h3>Công ty DEF</h3>
+                        <p class="timeline-subtitle">Junior Web Developer</p>
+                        <p>Phát triển và bảo trì website công ty, học hỏi các công nghệ mới trong môi trường chuyên nghiệp.</p>
                     </div>
                 </div>
             </div>
